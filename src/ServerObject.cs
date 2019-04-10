@@ -1,6 +1,4 @@
-﻿using Server.src;
-using System;
-using System.Data;
+﻿using System;
 using System.Data.SqlClient;
 using System.Net;
 using System.Net.Sockets;
@@ -17,7 +15,7 @@ namespace Server.src
     {
         static string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
-        const int port = 8888;
+        const int port = 21;
         TcpListener listener;
         List<ClientObject> clients = new List<ClientObject>(); // все подключения
 

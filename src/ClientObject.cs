@@ -1,9 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
+
+/*
+<add name="DefaultConnection"
+         connectionString="Data Source=.\SQLEXPRESS;Initial Catalog=NuclearDb;Integrated Security=True"
+        providerName="System.Data.SqlClient"/>
+*/
 
 namespace Server.src
 {
