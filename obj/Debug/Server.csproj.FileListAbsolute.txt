@@ -1,0 +1,7 @@
+D:\01Programms\VS\Repository\Nuclear\NuServer\Server\bin\Debug\Server.exe.config
+D:\01Programms\VS\Repository\Nuclear\NuServer\Server\bin\Debug\Server.exe
+D:\01Programms\VS\Repository\Nuclear\NuServer\Server\bin\Debug\Server.pdb
+D:\01Programms\VS\Repository\Nuclear\NuServer\Server\obj\Debug\Server.csprojAssemblyReference.cache
+D:\01Programms\VS\Repository\Nuclear\NuServer\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
+D:\01Programms\VS\Repository\Nuclear\NuServer\Server\obj\Debug\Server.exe
+D:\01Programms\VS\Repository\Nuclear\NuServer\Server\obj\Debug\Server.pdb
