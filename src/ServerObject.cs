@@ -15,7 +15,7 @@ namespace Server.src
     {
         static string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
-        const int port = 21;
+        const int port = 2888;
         TcpListener listener;
         List<ClientObject> clients = new List<ClientObject>(); // все подключения
 
