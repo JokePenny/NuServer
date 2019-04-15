@@ -26,9 +26,7 @@ namespace Server.src
 
         protected internal void RemoveConnection(string id)
         {
-            // получаем по id закрытое подключение
             ClientObject client = clients.FirstOrDefault(c => c.Id == id);
-            // и удаляем его из списка подключений
             if (client != null)
                 clients.Remove(client);
         }
@@ -47,7 +45,6 @@ namespace Server.src
                     TcpClient client = listener.AcceptTcpClient();
 
                     ClientObject clientObject = new ClientObject(client, this);
-                    // создаем новый поток для обслуживания нового клиента
                     Thread clientThread = new Thread(new ThreadStart(clientObject.Process));
                     clientThread.Start();
                 }
@@ -77,13 +74,13 @@ namespace Server.src
             byte[] data = Encoding.Unicode.GetBytes(message);
             for (int i = 0; i < clients.Count; i++)
             {
-                if (clients[i].Id != id && clients[i].located == room) // если id клиента не равно id отправляющего
+                if (clients[i].Id != id && clients[i].located == room) // передаем конкретной комнате
                 {
-                    clients[i].Stream.Write(data, 0, data.Length); //передача данных
+                    clients[i].Stream.Write(data, 0, data.Length);
                 }
             }
         }
-        // отключение всех клиентов
+
         protected internal void Disconnect()
         {
             listener.Stop(); //остановка сервера
@@ -252,6 +249,24 @@ namespace Server.src
                                             cmd.Parameters.Add("@status", "1");
                                             cmd.Parameters.Add("@readiness", "1");
                                             cmd.ExecuteNonQuery();
+                                            cmd = new SqlCommand("SELECT COUNT(*) as count FROM " + name.ToString() + " WHERE run = 0", connectionUser);
+                                            string ready = cmd.ExecuteScalar().ToString();
+                                            cmd = new SqlCommand("SELECT * FROM [Rooms] WHERE Name = '" + name.ToString() + "'", connectionUser);
+                                            row = cmd.ExecuteReader();
+                                            while (row.Read())
+                                            {
+                                                if (row.GetString(0) == name.ToString())
+                                                {
+                                                    object readyMark = row["status"];
+                                                    if(ready == readyMark.ToString())
+                                                    {
+                                                        row.Close();
+                                                        cmd = new SqlCommand("UPDATE [Rooms] SET status = 1 WHERE Name = '" + name.ToString() + "'", connectionUser);
+                                                        cmd.ExecuteNonQuery();
+                                                    }
+                                                    break;
+                                                }
+                                            }
                                             connectionUser.Close();
                                             message = "Вы зашли в комнату;" + message;
                                             return message;

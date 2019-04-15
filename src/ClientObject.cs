@@ -54,7 +54,6 @@ namespace Server.src
                             message = GetMessage();
                             string[] decode = message.Split(' ');
                             Console.WriteLine(DateTime.Now.ToShortTimeString() + ":OK: " + message);
-                            //server.BroadcastMessage(message, this.Id, located, decode[0]);
                             if (decode[1] == "d")
                             {
                                 server.BroadcastMessage(message, this.Id, located);

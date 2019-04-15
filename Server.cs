@@ -14,7 +14,7 @@ namespace Server
             {
                 server = new ServerObject();
                 listenThread = new Thread(new ThreadStart(server.Listen));
-                listenThread.Start(); //старт потока
+                listenThread.Start();
             }
             catch (Exception ex)
             {
