@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-
 namespace Server.src
 {
     class ServerObject
@@ -219,11 +218,14 @@ namespace Server.src
                                 object count_connect = row["count_connect"];
                                 object range_up = row["range_up"];
                                 object range_down = row["range_down"];
+                                object status = row["status"];
                                 row.Close();
                                 if (Convert.ToInt32(command[3].ToString()) > Convert.ToInt32(range_up.ToString()) || Convert.ToInt32(command[3].ToString()) < Convert.ToInt32(range_down.ToString()))
                                     return "Недоступен по уровню";
                                 if (Convert.ToInt32(count_connect.ToString()) + 1 > Convert.ToInt32(count_capacity.ToString()))
                                     return "Комната заполнена";
+                                if (status.ToString() == "1")
+                                    return "Матч уже начался";
                                 else
                                 {
                                     cmd = new SqlCommand("UPDATE [Rooms] SET count_connect = " + (Convert.ToInt32(count_connect.ToString()) + 1).ToString() + " WHERE Name = '" + command[1] + "'", connectionUser);
@@ -255,10 +257,11 @@ namespace Server.src
                                             row = cmd.ExecuteReader();
                                             while (row.Read())
                                             {
-                                                if (row.GetString(0) == name.ToString())
+                                                if (row["name"].ToString() == name.ToString())
                                                 {
-                                                    object readyMark = row["status"];
-                                                    if(ready == readyMark.ToString())
+                                                    object readyMark = row["count_capacity"];
+                                                    object gameIn = row["status"];
+                                                    if (ready == readyMark.ToString() && gameIn.ToString() == "0")
                                                     {
                                                         row.Close();
                                                         cmd = new SqlCommand("UPDATE [Rooms] SET status = 1 WHERE Name = '" + name.ToString() + "'", connectionUser);
